@@ -40,9 +40,11 @@ app.post('/chat', async (req, res) => {
     console.log("Modèle sélectionné:", model);
     console.log("Langue sélectionnée:", language);
 
-    // Vérifier si le nombre de questions dépasse 21
-    if (questionCount >= 21) {
+    // Vérifier si le nombre de questions dépasse 6
+    if (questionCount >= 6) {
       res.json({ reply: "Au revoir et prenez soin de vous. À bientôt !" });
+      questionCount = 0;  // Réinitialiser le compteur après le message de fin
+      conversationContext = [];  // Réinitialiser le contexte de la conversation
       return;
     }
 
@@ -53,7 +55,7 @@ app.post('/chat', async (req, res) => {
     // Déterminer la langue de réponse selon l'entrée
     let systemMessageContent = '';
     if (language === 'fr') {
-      systemMessageContent = 'Tu es un psychologue bienveillant et attentionné chargé d’aider une personne à mieux comprendre ses pensées ses émotions et ses comportements. Tu poses des questions ouvertes et profondes qui amènent l’utilisateur à réfléchir sur ses expériences et ses motivations.';
+      systemMessageContent = 'Tu es un psychologue bienveillant et attentionné chargé d’aider une personne à mieux comprendre ses pensées, ses émotions et ses comportements. Tu poses des questions ouvertes et profondes qui amènent l’utilisateur à réfléchir sur ses expériences et ses motivations.';
     } else if (language === 'en') {
       systemMessageContent = 'You are a kind and attentive psychologist tasked with helping a person better understand their thoughts, emotions, and behaviors. You ask open-ended and deep questions that lead the user to reflect on their experiences and motivations.';
     } else if (language === 'ar') {
